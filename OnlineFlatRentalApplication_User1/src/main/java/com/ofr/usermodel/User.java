@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "UserTable")
@@ -13,8 +16,12 @@ public class User {
 	@Column(length = 15)
 	private Integer userId;
 	@Column(length = 15)
+	@NotNull
+	@Size(min = 5, max = 10, message = "User Name should have Minimum 5 and Maximum 10 Characters")
 	private String userName;
 	@Column(length = 15)
+	@NotNull
+	@Pattern(regexp =  "^[(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\\\S+$).{8, 15}]*$", message = "Password should be AlphaNumeric and contain atleast One Special Character")
 	private String password;
 	@Column(length = 15)
 	private String userType;
