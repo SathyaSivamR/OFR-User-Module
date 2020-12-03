@@ -12,12 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.print.attribute.standard.Severity;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.stereotype.Service;
 
 import com.ofr.userdao.UserDao;
 import com.ofr.userexception.DuplicateUserRecordException;
@@ -114,13 +117,19 @@ class UserServiceImplTest {
 	}
 
 	@Test
-	void testValidateUser() throws DuplicateUserRecordException, RegisterationException {
+	void testValidateUser() throws DuplicateUserRecordException, RegisterationException, UserNotFoundException {
 
 		User user1 = new User(10, "Sathya", "123456", "Tenant");
 		service.addUser(user1);
 		
+		when(service.validateUser(10, "Sathya", "123456")).thenReturn("Validated");
 		Optional<User> valid = dao.findById(10);
+		
+		String check = service.validateUser(10, "Sathya", "123456");
+		verify(service, times(1)).validateUser(10, "Sathya", "123456");
+		
 		assertNotNull(valid);
+		assertEquals("Validated", check);
 	}
 	
 	@Test
@@ -132,7 +141,6 @@ class UserServiceImplTest {
 		user1.setPassword("987654");
 		dao.save(user1);
 		assertEquals("987654", user1.getPassword());
-		
 		
 	}
 	

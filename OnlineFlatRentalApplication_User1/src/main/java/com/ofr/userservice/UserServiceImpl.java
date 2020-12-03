@@ -1,5 +1,11 @@
 package com.ofr.userservice;
 
+/*
+ * Flat Service Implementation class
+ * 
+ * @Author : Sathya Sivam R
+*/
+
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +36,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	String userNotFound = "User Not Existed";
+	
+	/*
+	 * This method is used for add the user
+	 * return type User
+	 * @param user
+	 * exception RegisterationException,DuplicateUserRecordException
+	 */
 	@Override
 	public User addUser(User user) throws DuplicateUserRecordException, RegisterationException{
 		
@@ -47,6 +60,12 @@ public class UserServiceImpl implements UserService{
 		return getUserDao().save(user);
 	}
 
+	/*
+	 * This method is used for update the user
+	 * return type user
+	 * @param user
+	 * exception UserNotFoundException
+	 */
 	@Override
 	public User updateUser(User user) throws UserNotFoundException{
 		Optional<User> user1 = userDao.findById(user.getUserId());
@@ -60,6 +79,12 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	/*
+	 * This method is used for delete the user
+	 * return type user
+	 * @param user
+	 * exception UserNotFoundException
+	 */
 	@Override
 	public User removeUser(User user) throws UserNotFoundException{
 		Optional<User> user1 = userDao.findById(user.getUserId());
@@ -74,6 +99,12 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 
+	/*
+	 * This method is used for viewing the user by id
+	 * return type user
+	 * @param user
+	 * exception UserNotFoundException
+	 */
 	@Override
 	public Optional<User> viewUser(Integer userId) throws UserNotFoundException {
 		Optional<User> user = getUserDao().findById(userId);
@@ -87,12 +118,22 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	/*
+	 * This method is used for view all the user
+	 * return type list
+	 * @param user
+	 */
 	@Override
 	public List<User> viewAllUser() {
 
 		return getUserDao().findAll();
 	}
 
+	/*
+	 * This method is used for validate the user's username and password 
+	 * @param user, username, password return type String
+	 * exception UserNotFoundException
+	 */
 	@Override
 	public String validateUser(Integer userId, String userName, String password) throws UserNotFoundException {
 
@@ -111,6 +152,13 @@ public class UserServiceImpl implements UserService{
 		return "Given User ID Not Found";
 	}
 
+	/*
+	 * This method is used for update the password of particular user
+	 * First it checks the old username and password is valid or not then it changes the new password
+	 * return type String 
+	 * @param user, new password
+	 * exception UserNotFoundException
+	 */
 	@Override
 	public String updatePassword(User user, String newpass) throws UserNotFoundException {
 

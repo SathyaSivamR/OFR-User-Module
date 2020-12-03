@@ -1,5 +1,11 @@
 package com.ofr.usermodel;
 
+/*
+*	Entity Class
+*
+*	@Author : Sathya Sivam R
+*/
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,13 +27,22 @@ public class User {
 	private String userName;
 	@Column(length = 15)
 	@NotNull
-	@Pattern(regexp =  "^[(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\\\S+$).{8, 15}]*$", message = "Password should be AlphaNumeric and contain atleast One Special Character")
+	@Pattern(regexp =  "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$&*]).{8,15}$", message = "Password should be AlphaNumeric and contain atleast One Special Character")
 	private String password;
 	@Column(length = 15)
+	@Size(min = 6,max = 8, message = "Enter the valid type")
 	private String userType;
+
+	/*
+	 * Default Constructor
+	 */
 	public User() {
 		
 	}
+	
+	/*
+	 * Parameterized Constructor
+	 */
 	public User(Integer userId, String userName, String password, String userType) {
 		super();
 		this.userId = userId;
@@ -35,6 +50,10 @@ public class User {
 		this.password = password;
 		this.userType = userType;
 	}
+	
+	/*
+	 * Getters and Setters for all private variables
+	 */
 	public Integer getUserId() {
 		return userId;
 	}
@@ -59,6 +78,10 @@ public class User {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	
+	/*
+	 * To Sring Method to print the details
+	 */
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userType=" + userType
